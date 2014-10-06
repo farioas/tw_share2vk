@@ -96,7 +96,7 @@ def main():
                 tweet_content = tweet_content.replace(url['url'], url['expanded_url'])
             if 'media' in tweet.entities:
                 for image in tweet.entities['media']:
-                    photo = image['media_url'] + ":large"
+                    photo = image['media_url'] + ":orig"
                     print("Tweet.img: " + str(photo))
                     vk_wall_text_photo(tweet_content.encode("utf-8"), photo)
                     print("Tweet sent on wall with photo")
