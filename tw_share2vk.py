@@ -22,6 +22,7 @@ login = ''  # Login
 passwd = ''  # Pass
 # ---------------------------------------------------------------------
 path_to_twfile = './tw_file'
+twtag = ""
 
 
 def get_last_tweet():
@@ -88,20 +89,21 @@ def main():
             list(tweepy.Cursor(tw_auth().user_timeline, id=username, include_rts=False, exclude_replies=True,
                                include_entities=True, since_id=get_last_tweet()).items())):
         tweet_content = tweet.text
-        print("Tweet.id: " + str(tweet.id))
-        print("Tweet.txt: " + tweet_content.encode("utf-8"))
-        for url in tweet.entities['urls']:
-            tweet_content = tweet_content.replace(url['url'], url['expanded_url'])
-        if 'media' in tweet.entities:
-            for image in tweet.entities['media']:
-                photo = image['media_url'] + ":large"
-                print("Tweet.img: " + str(photo))
-                vk_wall_text_photo(tweet_content.encode("utf-8"), photo)
-                print("Tweet sent on wall with photo")
-        else:
-            vk_wal_text(tweet_content.encode("utf-8"))
-            print("Tweet sent on wall")
-        print("\n")
+        if twtag in str(tweet.entities.get('hashtags')):
+            print("Tweet.id: " + str(tweet.id))
+            print("Tweet.txt: " + tweet_content.encode("utf-8"))
+            for url in tweet.entities['urls']:
+                tweet_content = tweet_content.replace(url['url'], url['expanded_url'])
+            if 'media' in tweet.entities:
+                for image in tweet.entities['media']:
+                    photo = image['media_url'] + ":large"
+                    print("Tweet.img: " + str(photo))
+                    vk_wall_text_photo(tweet_content.encode("utf-8"), photo)
+                    print("Tweet sent on wall with photo")
+            else:
+                vk_wal_text(tweet_content.encode("utf-8"))
+                print("Tweet sent on wall")
+            print("\n")
     write_file()
     print("Last tweet saved")
 
