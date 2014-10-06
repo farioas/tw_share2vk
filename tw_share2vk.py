@@ -3,11 +3,10 @@
 #_author: Sergey Zhuk farioas@gmail.com
 # https://github.com/farioas/tw_share2vk #
 
-import urllib3
+import urllib
 import tweepy
 import vk_api
 import os.path
-urllib3.disable_warnings()
 
 # -------TWITTER_APP_CONFIG--------------------------------------------
 consumer_key = ""
@@ -74,7 +73,7 @@ def tw_auth():
 
 
 def vk_wall_text_photo(text, photo):
-    urllib3.urlretrieve(photo, 'temp.jpg')
+    urllib.urlretrieve(photo, 'temp.jpg')
     response = vk_api.VkUpload(vk_auth()).photo_wall('temp.jpg')[0]
     photo = 'photo{}_{}'.format(response['owner_id'], response['id'])
     vk_auth().method('wall.post', {'message': text, 'attachments': photo})
