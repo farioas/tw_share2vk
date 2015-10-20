@@ -24,7 +24,6 @@ passwd = ''  # Pass
 path_to_twfile = './tw_file'
 twtag = ""
 
-
 def get_last_tweet():
     if os.path.isfile(path_to_twfile) and os.access(path_to_twfile, os.R_OK):
         print("Tweet file found")
